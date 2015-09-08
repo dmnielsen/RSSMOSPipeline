@@ -17,7 +17,7 @@ The pipeline is written in pure python (2.7.x). It needs the following modules t
 
 * numpy
 * scipy
-* atpy
+* astropy
 * pyfits
 * matplotlib
 
