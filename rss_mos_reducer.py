@@ -750,7 +750,7 @@ def findWavelengthCalibration(arcData, modelFileName, sigmaCut = 3.0, thresholdS
         if dist.min() < maxDistancePix:
             index=np.argmin(dist)
             arcFeatureTable['wavelength'][index]=row['wavelength']
-    arcFeatureTable=arcFeatureTable.where(arcFeatureTable['wavelength'] != 0)
+    arcFeatureTable=arcFeatureTable[arcFeatureTable['wavelength'] != 0]
     if len(arcFeatureTable) == 0:
         raise Exception, "No features identified in arc"    
         
