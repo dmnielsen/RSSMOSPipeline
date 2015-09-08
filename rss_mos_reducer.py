@@ -12,7 +12,7 @@ import pyfits
 import glob
 import time
 import datetime
-import atpy
+from astropy.table import Table,Column
 #from astLib import *
 from scipy import interpolate
 from scipy import ndimage
@@ -568,11 +568,11 @@ def detectLines(data, sigmaCut = 3.0, thresholdSigma = 2.0, featureMinPix = 30):
     objPositions_centreRow=ndimage.center_of_mass(data[data.shape[0]/2], labels = segmentationMap, index = objIDs)
     objPositions_centreRow=np.array(objPositions_centreRow).flatten()
     minPixMask=np.greater(objNumPix, featureMinPix)
-    featureTable=atpy.Table()
-    featureTable.add_column('id', objIDs[minPixMask])
-    featureTable.add_column('x_centreRow', objPositions_centreRow[minPixMask])
-    featureTable.add_column('y_centreRow', [data.shape[0]/2]*len(featureTable))
-    featureTable.add_column('amplitude', data[data.shape[0]/2, np.array(np.round(featureTable['x_centreRow']), dtype = int)])
+    featureTable=Table()
+    featureTable.add_column(Column(objIDs[minPixMask],name='id'))
+    featureTable.add_column(Column(objPositions_centreRow[minPixMask],name='x_centreRow'))
+    featureTable.add_column(Column([data.shape[0]/2]*len(featureTable),name='y_centreRow'))
+    featureTable.add_column(Column(data[data.shape[0]/2, np.array(np.round(featureTable['x_centreRow']), dtype = int)],name='amplitude'))
 
     return featureTable, segmentationMap
 
