@@ -742,7 +742,7 @@ def findWavelengthCalibration(arcData, modelFileName, sigmaCut = 3.0, thresholdS
     # Tag features by transforming model coords to arc coords and looking for closest match
     # Looking at above sanity plot, seems like the weak link here is centroiding done for 
     # x_centreRow in arcFeatureTable?
-    arcFeatureTable.add_column('wavelength', np.zeros(len(arcFeatureTable)))    
+    arcFeatureTable.add_column(Column(np.zeros(len(arcFeatureTable))),name='wavelength')    
     maxDistancePix=20.0
     for row in refModelDict['featureTable']:
         transformed_model_x=(row['x_centreRow']-bestFitShift)/(1+bestFitScale)
@@ -782,8 +782,8 @@ def findWavelengthCalibration(arcData, modelFileName, sigmaCut = 3.0, thresholdS
     # Find 2d wavelength solution which we can use for rectification/wavelength calibration
     # Fit functions for how feature x positions change with y
     ys=np.arange(arcData.shape[0])
-    arcFeatureTable.add_column('slope', np.zeros(len(arcFeatureTable)))
-    arcFeatureTable.add_column('intercept', np.zeros(len(arcFeatureTable)))
+    arcFeatureTable.add_column(Column(np.zeros(len(arcFeatureTable))),name='slope')
+    arcFeatureTable.add_column(Column(np.zeros(len(arcFeatureTable))),name='intercept')
     for row in arcFeatureTable:
         xs=np.zeros(arcData.shape[0])
         for i in range(len(ys)):
